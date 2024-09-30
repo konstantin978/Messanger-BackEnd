@@ -80,6 +80,14 @@ app.post('/follow', async (req, res) => {
 
 		const firstUser = await usersModel.findOne({ username: firstUsername });
 		const secondUser = await usersModel.findOne({ username: secondUsername });
+		
+		if(!firstUser) {
+			throw new errors.UserNotFoundError();
+		};
+
+		if(!secondUser){
+			throw new errors.UserNotFoundError();
+		};
 
 		for (let i = 0; i < firstUser.followings.length; ++i) {
 			if (firstUser.followings[i] == secondUsername) {
